@@ -66,13 +66,8 @@ server <- function(id) {
     r$data_high <- read.csv("app/static/data/high_popularity_spotify_data.csv")
     r$data_low <- read.csv("app/static/data/low_popularity_spotify_data.csv")
 
-    sidebar$server('sidebar', r = r)
-
-    output$scatter <- plotly$renderPlotly({
-      if(!is.null(input$var1)){
-        plotly$plot_ly(r$data_high, x = ~get(input$var1), y = ~get(input$var2), type = 'scatter', mode = 'markers')
-      }
-    })
+    sidebar$server('sidebar', r=r)
+    linear_regression$server('linear_regression', r=r)
 
     output$violin1 <- plotly$renderPlotly({
       if(!is.null(input$var1)){
