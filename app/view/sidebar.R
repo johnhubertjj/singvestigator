@@ -6,7 +6,7 @@ ui <- function(id){
   ns <- NS(id)
 
 #' @export
-sidebar <- sidebar(
+sidebar(
   h3("Inputs"),
   # selectizeInput("high_or_low", choices=c("high", 'low'))
 

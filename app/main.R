@@ -17,6 +17,7 @@ box::use(
   app/view/chart,
   app/view/table,
   app/view/theme,
+  app/view/sidebar
 )
 
 
@@ -25,15 +26,7 @@ ui <- function(id) {
   ns <- NS(id)
   page_sidebar(
     title="Singvestigation",
-    sidebar=sidebar(
-      h3("Inputs"),
-      # selectizeInput("high_or_low", choices=c("high", 'low'))
-
-      varSelectInput(ns("var1"), "Select variable 1:", data=NULL),
-      varSelectInput(ns("var2"), "Select variable 2: ", data = NULL),
-      varSelectInput(ns("varall"), "Select variables for PCA:", data = NULL, multiple = TRUE)
-
-    ),
+    sidebar=sidebar$ui(ns('sidebar')),
     card(full_screen=TRUE,
          card_header("Linear Regression"),
          plotly$plotlyOutput(ns("scatter"))
@@ -73,14 +66,7 @@ server <- function(id) {
     r$data_high <- read.csv("app/static/data/high_popularity_spotify_data.csv")
     r$data_low <- read.csv("app/static/data/low_popularity_spotify_data.csv")
 
-    observe({
-      updateVarSelectInput(session = session,
-                           inputId = 'var1',data = r$data_high)
-      updateVarSelectInput(session = session,
-                           inputId = 'var2',data = r$data_high)
-      updateVarSelectInput(session = session,
-                           inputId = 'varall',data = r$data_high)
-    })
+    sidebar$server('sidebar', r = r)
 
     output$scatter <- plotly$renderPlotly({
       if(!is.null(input$var1)){
