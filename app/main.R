@@ -26,16 +26,11 @@ ui <- function(id) {
   ns <- NS(id)
   page_sidebar(
     title="Singvestigation",
-    sidebar=sidebar$ui(ns('sidebar')),
-    card(full_screen=TRUE,
-         card_header("Linear Regression"),
-         plotly$plotlyOutput(ns("scatter"))
-    ),
-    card(full_screen=TRUE,
-         card_header("Violin"),
-         plotly$plotlyOutput(ns("violin1")),
-         plotly$plotlyOutput(ns("violin2")))
+    sidebar=sidebar$ui(ns("sidebar")),
+    linear_regression$ui(ns("linear_regression")),
+    violin$ui(ns("violin"))
   )
+
   # bootstrapPage(
   #   div(
   #     class= "components-container",
@@ -68,60 +63,7 @@ server <- function(id) {
 
     sidebar$server('sidebar', r=r)
     linear_regression$server('linear_regression', r=r)
-
-    output$violin1 <- plotly$renderPlotly({
-      if(!is.null(input$var1)){
-        fig <- r$data_high %>%
-          plotly$plot_ly(
-            y = ~get(input$var1),
-            type = 'violin',
-            box = list(
-              visible = T
-            ),
-            meanline = list(
-              visible = T
-            ),
-            x0 = paste0(input$var1)
-          )
-
-        fig <- fig %>%
-          plotly$layout(
-            yaxis = list(
-              title = "",
-              zeroline = F
-            )
-          )
-
-        fig
-      }
-    })
-
-    output$violin2 <- plotly$renderPlotly({
-      if(!is.null(input$var2)){
-        fig <- r$data_high %>%
-          plotly$plot_ly(
-            y = ~get(input$var2),
-            type = 'violin',
-            box = list(
-              visible = T
-            ),
-            meanline = list(
-              visible = T
-            ),
-            x0 = paste0(input$var2)
-          )
-
-        fig <- fig %>%
-          plotly$layout(
-            yaxis = list(
-              title = "",
-              zeroline = F
-            )
-          )
-
-        fig
-      }
-    })
+    violin$server('violin', r=r)
 
 
 
