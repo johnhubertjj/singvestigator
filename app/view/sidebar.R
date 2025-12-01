@@ -1,5 +1,5 @@
 box::use(
-  shiny[h3, varSelectInput, ns],
+  shiny[h3, varSelectInput, NS, moduleServer, observeEvent, observe, updateVarSelectInput],
   bslib[sidebar],
 )
 ui <- function(id){

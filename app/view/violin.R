@@ -1,6 +1,8 @@
 box::use(
-  shiny[h3, ns],
+  shiny[h3, NS, moduleServer, req],
   bslib[card, card_header],
+  plotly,
+  magrittr[`%>%`]
 )
 
 
@@ -21,7 +23,7 @@ server <- function(id, r) {
   moduleServer(id, function(input, output, session) {
 
     output$violin1 <- plotly$renderPlotly({
-      if(!is.null(r$var1)){
+      req(r$var1)
         fig <- r$data_high %>%
           plotly$plot_ly(
             y = ~get(r$var1),
@@ -44,11 +46,10 @@ server <- function(id, r) {
           )
 
         fig
-      }
     })
 
     output$violin2 <- plotly$renderPlotly({
-      if(!is.null(r$var2)){
+      req(r$var2)
         fig <- r$data_high %>%
           plotly$plot_ly(
             y = ~get(r$var2),
@@ -71,7 +72,6 @@ server <- function(id, r) {
           )
 
         fig
-      }
     })
 
   })

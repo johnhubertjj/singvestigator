@@ -17,7 +17,9 @@ box::use(
   app/view/chart,
   app/view/table,
   app/view/theme,
-  app/view/sidebar
+  app/view/sidebar,
+  app/view/linear_regression,
+  app/view/violin,
 )
 
 
@@ -57,7 +59,6 @@ server <- function(id) {
     #   )
     # })
     r <- reactiveValues()
-
     r$data_high <- read.csv("app/static/data/high_popularity_spotify_data.csv")
     r$data_low <- read.csv("app/static/data/low_popularity_spotify_data.csv")
 
@@ -78,8 +79,5 @@ server <- function(id) {
     #     echarts4r$e_title(paste0("Linear Regression of", .data[[input$var1]]," vs. ", .data[[input$var2]]))
     # })
 
-    data <- rhinos
-    table$server("table", data = data)
-    chart$server("chart", data = data)
   })
 }
