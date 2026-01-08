@@ -6,6 +6,7 @@ box::use(
 )
 
 
+#' UI card for the linear regression/scatter plot
 #' @export
 ui <- function(id){
   ns <- NS(id)
@@ -16,7 +17,9 @@ ui <- function(id){
   )
 }
 
+#' server for the scatter plot
 #' @export
+#' @param r 'petit r' reactive object
 server <- function(id, r) {
   moduleServer(id, function(input, output, session) {
 

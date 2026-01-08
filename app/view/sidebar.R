@@ -2,10 +2,14 @@ box::use(
   shiny[h3, varSelectInput, NS, moduleServer, observeEvent, observe, updateVarSelectInput],
   bslib[sidebar],
 )
+
+
+#' UI for sidebar
+#' @return 3 select inputs with column values from the music dataset
+#' @export
 ui <- function(id){
   ns <- NS(id)
 
-#' @export
 sidebar(
   h3("Inputs"),
   # selectizeInput("high_or_low", choices=c("high", 'low'))
@@ -17,6 +21,10 @@ sidebar(
 )
 }
 
+#' UI for sidebar
+#' @param r 'petit r' reactive object
+#' @return tracking of user interaction with select inputs
+#' @export
 server <- function(id, r) {
   moduleServer(id, function(input, output, session) {
 

@@ -6,7 +6,9 @@ box::use(
 )
 
 
+#' UI card for the violin plot
 #' @export
+#' @return 2 violin plots one above the other
 ui <- function(id){
   ns <- NS(id)
 
@@ -18,7 +20,10 @@ ui <- function(id){
        )
 }
 
+#' server for the violin plot
 #' @export
+#' @param r 'petit r' reactive object
+#' @return server code for 2 violin plotly plots.
 server <- function(id, r) {
   moduleServer(id, function(input, output, session) {
 
