@@ -17,11 +17,15 @@ box::use(
   app/view/chart,
   app/view/table,
   app/view/theme,
-  app/view/sidebar
+  app/view/sidebar,
+  app/view/linear_regression,
+  app/view/violin,
 )
 
 
+#' Main UI function
 #' @export
+#' @param id identification for client
 ui <- function(id) {
   ns <- NS(id)
   page_sidebar(
@@ -45,19 +49,13 @@ ui <- function(id) {
   # )
 }
 
+#' Main server function
 #' @export
+#' @param id idenfication for client
 server <- function(id) {
   moduleServer(id, function(input, output, session) {
-    # output$message <- renderUI({
-    #   div(
-    #     style = "display: flex; justify-content: center; align-items: center; height: 100vh;",
-    #     tags$h1(
-    #       tags$a("Check out Rhino docs!", href = "https://appsilon.github.io/rhino/")
-    #     )
-    #   )
-    # })
-    r <- reactiveValues()
 
+    r <- reactiveValues()
     r$data_high <- read.csv("app/static/data/high_popularity_spotify_data.csv")
     r$data_low <- read.csv("app/static/data/low_popularity_spotify_data.csv")
 
@@ -67,19 +65,7 @@ server <- function(id) {
 
 
 
-    #
-    # output$chart <- echarts4r$renderEcharts4r({
-    #   r$data_high |>
-    #
-    #     echarts4r$e_charts(.data_high[[input$var1]]) |>
-    #     echarts4r$e_scatter(.data[[input$var2]]) |>
-    #     # Add the linear regression line
-    #     echarts4r$e_lm() |>
-    #     echarts4r$e_title(paste0("Linear Regression of", .data[[input$var1]]," vs. ", .data[[input$var2]]))
-    # })
 
-    data <- rhinos
-    table$server("table", data = data)
-    chart$server("chart", data = data)
+
   })
 }
